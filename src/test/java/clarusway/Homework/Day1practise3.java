@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class Day1practise3 extends BaseTest{
 
@@ -63,8 +64,9 @@ public class Day1practise3 extends BaseTest{
         WebElement button = driver.findElement(By.id("submit"));
         button.click();
         WebElement error= driver.findElement(By.id("error"));
-        Assert.assertTrue(error.isDisplayed());
-        Assert.assertTrue(error.getText().contains("Your username is invalid!"));
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(error.isDisplayed(),"Your username is invalid!");
+        softAssert.assertTrue(error.getText().contains("Your username is invalid!"));
     }
 
          /*
@@ -78,22 +80,26 @@ public class Day1practise3 extends BaseTest{
           */
 
     @Test
-    public void negativePassword(){
+    public void negativePassword()  {
 
         driver.get(" https://practicetestautomation.com/practice-test-login/");
-        WebElement userName = driver.findElement(By.id("username"));
+        WebElement userName = driver.findElement(By.xpath("//input[@name='username']"));
         userName.sendKeys("student");
+
         WebElement password = driver.findElement(By.id("password"));
         password.sendKeys("assword13");
         WebElement button = driver.findElement(By.id("submit"));
         button.click();
         WebElement newPage = driver.findElement(By.id("modern-store-modified"));
 
-        WebElement area = driver.findElement(By.xpath("//div[@id='loop-container']//p"));
-        Assert.assertTrue(area.getText().contains("You successfully logged in!"), "Aranan yazı görüntüelnemiyor");
-        WebElement logOut = driver.findElement(By.xpath("//a[.='Log out']"));
-        Assert.assertTrue(logOut.isDisplayed());
-        logOut.click();
+        WebElement area = driver.findElement(By.xpath("//input[@name='password']"));
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(area.isDisplayed());
+        WebElement error = driver.findElement(By.xpath("//div[@id='error']"));
+        softAssert.assertTrue(error.getText().contains("Your password is invalid!"));
+        softAssert.assertAll();
+        error.click();
+
 
     }
 
