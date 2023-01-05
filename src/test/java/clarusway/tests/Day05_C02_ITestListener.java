@@ -18,6 +18,7 @@ public class Day05_C02_ITestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
+
         System.out.println("onTestFailure methodu calisti");
     }
 
